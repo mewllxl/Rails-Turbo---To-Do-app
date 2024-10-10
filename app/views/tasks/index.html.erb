@@ -1,0 +1,49 @@
+<h1>TODOS</h1>
+
+<div class="todo-container">
+  <ul class="nav">
+    <li class="<%= 'active' if params[:action] == 'incomplete' %>"><%= link_to "Incomplete", incomplete_tasks_path %></li>
+    <li class="<%= 'active' if params[:action] == 'complete_tasks' %>"><%= link_to "Complete", complete_tasks_path %></li>
+  </ul>
+
+  <div class="form-section">
+    <%= form_with model: @task, url: tasks_path, method: :post, local: true do |f| %>
+        <%= f.label :name, "Name" %>
+        <div class="form-section">
+        <%= f.text_field :name, class: "todo-input" %>
+        <%= f.submit "Create Todo", class: "create-button" %>
+      </div>
+      
+    <% end %>
+  </div>
+
+  <% if params[:action] == 'incomplete' %>
+    
+    <ul class="todo-list">
+      <% @incomplete_tasks.each do |task| %>
+       <li class="todo-item">
+  <span><%= task.name %></span>
+  <%= link_to complete_task_path(task), method: :get, class: "complete-button" do %>
+    <i class="fas fa-check-circle"></i> 
+  <% end %>
+  <%= link_to task_path(task), method: :delete, data: { confirm: "จะลบจริงๆหรอคับ ?" }, class: "delete-button" do %>
+    <i class="fas fa-trash"></i> 
+  <% end %>
+</li>
+
+      <% end %>
+    </ul>
+  <% elsif params[:action] == 'complete_tasks' %>
+    
+    <ul class="todo-list">
+  <% @complete_tasks.each do |task| %>
+    <li class="todo-item">
+  <span><%= task.name %></span>
+  <%= link_to task_path(task), method: :delete, data: { confirm: "จะลบจริงๆหรอคับ ?" }, class: "delete-button" do %>
+    <i class="fas fa-trash"></i> 
+  <% end %>
+</li>
+
+  <% end %>
+  <% end %>
+</div>
