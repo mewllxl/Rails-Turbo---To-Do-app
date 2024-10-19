@@ -8,42 +8,58 @@
 
   <div class="form-section">
     <%= form_with model: @task, url: tasks_path, method: :post, local: true do |f| %>
-        <%= f.label :name, "Name" %>
-        <div class="form-section">
+      <%= f.label :name, "Name" %>
+      <div class="form-section">
         <%= f.text_field :name, class: "todo-input" %>
         <%= f.submit "Create Todo", class: "create-button" %>
       </div>
-      
     <% end %>
   </div>
 
   <% if params[:action] == 'incomplete' %>
-    
     <ul class="todo-list">
       <% @incomplete_tasks.each do |task| %>
-       <li class="todo-item">
-  <span><%= task.name %></span>
-  <%= link_to complete_task_path(task), method: :get, class: "complete-button" do %>
-    <i class="fas fa-check-circle"></i> 
-  <% end %>
-  <%= link_to task_path(task), method: :delete, data: { confirm: "จะลบจริงๆหรอคับ ?" }, class: "delete-button" do %>
-    <i class="fas fa-trash"></i> 
-  <% end %>
-</li>
+        <li class="todo-item">
+          <span><%= task.name %></span>
+          
+          <p class="task-description"><%= task.description %></p>
 
+         
+          <%= link_to complete_task_path(task), method: :get, class: "complete-button" do %>
+            <i class="fas fa-check-circle"></i> 
+          <% end %>
+
+          <!-- Edit Button -->
+          <%= link_to edit_task_path(task), class: "edit-button" do %>
+            <i class="fas fa-edit"></i> 
+          <% end %>
+
+          <!-- Delete Button -->
+          <%= link_to task_path(task), method: :delete, data: { confirm: "จะลบจริงๆหรอคับ ?" }, class: "delete-button" do %>
+            <i class="fas fa-trash"></i> 
+          <% end %>
+        </li>
       <% end %>
     </ul>
-  <% elsif params[:action] == 'complete_tasks' %>
-    
-    <ul class="todo-list">
-  <% @complete_tasks.each do |task| %>
-    <li class="todo-item">
-  <span><%= task.name %></span>
-  <%= link_to task_path(task), method: :delete, data: { confirm: "จะลบจริงๆหรอคับ ?" }, class: "delete-button" do %>
-    <i class="fas fa-trash"></i> 
-  <% end %>
-</li>
 
-  <% end %>
+  <% elsif params[:action] == 'complete_tasks' %>
+    <ul class="todo-list">
+      <% @complete_tasks.each do |task| %>
+        <li class="todo-item">
+          <span><%= task.name %></span>
+         
+          <p class="task-description" style="margin-right: 10px;"><%= task.description %></p>
+
+          <%= link_to edit_task_path(task), class: "edit-button" do %>
+            <i class="fas fa-edit"></i> 
+          <% end %>
+          
+         
+          <%= link_to task_path(task), method: :delete, data: { confirm: "จะลบจริงๆหรอคับ ?" }, class: "delete-button" do %>
+            <i class="fas fa-trash"></i> 
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
   <% end %>
 </div>

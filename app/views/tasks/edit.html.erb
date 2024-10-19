@@ -1,0 +1,17 @@
+<h1>Edit To-do</h1>
+
+<%= form_with model: @task, local: true, class: "task-form" do |f| %>
+  <div class="form-group">
+    <%= f.label :name, "Task Name", class: "form-label" %>
+    <%= f.text_field :name, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :description, "Task Description", class: "form-label" %>
+    <%= f.text_area :description, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.submit "Update Task", class: "btn btn-primary" %>
+  </div>
+<% end %>

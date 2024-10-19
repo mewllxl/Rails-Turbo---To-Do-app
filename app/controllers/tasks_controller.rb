@@ -20,7 +20,7 @@ class TasksController < ApplicationController
     @task = Task.new(task_params)
     @task.status = 0 # ตั้งค่าเริ่มต้นให้เป็น incomplete
     if @task.save
-      redirect_to incomplete_tasks_path # เปลี่ยนไปหน้า incomplete ทันที
+      redirect_to incomplete_tasks_path # เปลี่ยนไปหน้า incomplete tasks
     else
       render :index
     end
@@ -32,6 +32,25 @@ class TasksController < ApplicationController
     redirect_to incomplete_tasks_path
   end
 
+  def edit
+    @task = Task.find(params[:id])
+    @categories = Category.all  
+  end
+  
+  def update
+    @task = Task.find(params[:id])
+    if @task.update(task_params)
+      
+      session[:updated_task] = @task 
+  
+      
+      redirect_to tasks_path, notice: 'Task updated successfully.'
+    else
+      render :edit
+    end
+  end
+  
+
   def destroy
     @task = Task.find(params[:id])
     @task.destroy 
@@ -40,7 +59,8 @@ class TasksController < ApplicationController
 
   private
 
+
   def task_params
-    params.require(:task).permit(:name)
+    params.require(:task).permit(:name, :description, :category_id, :status)
   end
 end

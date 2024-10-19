@@ -110,4 +110,18 @@ h1 {
   .delete-button {
     color: #6d6d6d;
   }
+  .edit-button {
+    
+    color: #333; 
+    padding: 2px 2px; 
+    border: none; 
+    border-radius: 5px; 
+    text-decoration: none; 
+    cursor: pointer; 
+    display: inline-block; 
+  }
+  
+  .edit-button:hover {
+    background-color: #c0c0c0; 
+  }
   
