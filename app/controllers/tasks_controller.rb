@@ -34,7 +34,7 @@ class TasksController < ApplicationController
 
   def edit
     @task = Task.find(params[:id])
-    @categories = Category.all  
+    
   end
   
   def update
